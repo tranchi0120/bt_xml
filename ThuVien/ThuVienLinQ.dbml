@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="LibraryDb" Class="ThuVienLinQDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(localdb)\Projects;Initial Catalog=LibraryDb;Integrated Security=True" SettingsObjectName="ThuVien.Properties.Settings" SettingsPropertyName="LibraryDbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DOCGIA" Member="DOCGIAs">
+    <Type Name="DOCGIA">
+      <Column Name="madg" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tendg" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="ngaysinh" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="gioitinh" Type="System.String" DbType="NVarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="cmnd" Type="System.String" DbType="Char(9) NOT NULL" CanBeNull="false" />
+      <Column Name="diachi" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="sdt" Type="System.String" DbType="VarChar(11)" CanBeNull="true" />
+      <Column Name="capnhat" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="DOCGIA_MUONSACH" Member="MUONSACHes" ThisKey="madg" OtherKey="madg" Type="MUONSACH" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MUONSACH" Member="MUONSACHes">
+    <Type Name="MUONSACH">
+      <Column Name="idmuons" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="manv" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="madg" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="ngaymuon" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ngaytra" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="soluong" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="trangthai" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="capnhat" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="MUONSACH_SACHMUON" Member="SACHMUONs" ThisKey="idmuons" OtherKey="idmuons" Type="SACHMUON" />
+      <Association Name="DOCGIA_MUONSACH" Member="DOCGIA" ThisKey="madg" OtherKey="madg" Type="DOCGIA" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="NHANVIEN_MUONSACH" Member="NHANVIEN" ThisKey="manv" OtherKey="manv" Type="NHANVIEN" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NHANVIEN" Member="NHANVIENs">
+    <Type Name="NHANVIEN">
+      <Column Name="manv" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tennv" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="gioitinh" Type="System.String" DbType="NVarChar(3) NOT NULL" CanBeNull="false" />
+      <Column Name="diachi" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="cmnd" Type="System.String" DbType="Char(9) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dienthoai" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="capnhat" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="NHANVIEN_MUONSACH" Member="MUONSACHes" ThisKey="manv" OtherKey="manv" Type="MUONSACH" />
+      <Association Name="NHANVIEN_QUANTRIVIEN" Member="QUANTRIVIEN" ThisKey="manv" OtherKey="manv" Type="QUANTRIVIEN" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.QUANTRIVIEN" Member="QUANTRIVIENs">
+    <Type Name="QUANTRIVIEN">
+      <Column Name="manv" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="matkhau" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Association Name="NHANVIEN_QUANTRIVIEN" Member="NHANVIEN" ThisKey="manv" OtherKey="manv" Type="NHANVIEN" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SACH" Member="SACHes">
+    <Type Name="SACH">
+      <Column Name="masach" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="tensach" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="theloai" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="mota" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="namxb" Type="System.String" DbType="Char(4)" CanBeNull="true" />
+      <Column Name="nhaxuatban" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="tacgia" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="soluong" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="capnhat" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="SACH_SACHMUON" Member="SACHMUONs" ThisKey="masach" OtherKey="masach" Type="SACHMUON" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SACHMUON" Member="SACHMUONs">
+    <Type Name="SACHMUON">
+      <Column Name="idmuons" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="masach" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="MUONSACH_SACHMUON" Member="MUONSACH" ThisKey="idmuons" OtherKey="idmuons" Type="MUONSACH" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="SACH_SACHMUON" Member="SACH" ThisKey="masach" OtherKey="masach" Type="SACH" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>
